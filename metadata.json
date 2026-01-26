@@ -1,0 +1,5 @@
+{
+  "name": "BambuBookmark",
+  "description": "Create multicolor 3D printable bookmarks for AMS printers. Features AI pattern generation, auto-color quantization, and STL export.",
+  "requestFramePermissions": []
+}
