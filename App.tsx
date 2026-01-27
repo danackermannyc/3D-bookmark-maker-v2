@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import JSZip from 'jszip';
-import { Upload, Download, Settings, Layers, Image as ImageIcon, Loader2, Crop as CropIcon, Check, RefreshCw, Printer, Coffee } from 'lucide-react';
+import { Upload, Download, Settings, Layers, Image as ImageIcon, Loader2, Crop as CropIcon, Check, RefreshCw, Printer, Coffee, Youtube, Github, Flag, Mail } from 'lucide-react';
 import { quantizeImage, resizeImageToCanvas, drawQuantizedPreview, getCroppedImg, smoothIndices } from './utils/imageHelper';
 import { generate3MF, generateSTLs } from './utils/stlHelper';
 import { BookmarkSettings, ProcessingState, RGB } from './types';
@@ -18,6 +18,9 @@ export default function App() {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
 
+  // Gallery State
+  const [randomGalleryImage, setRandomGalleryImage] = useState<string | null>(null);
+
   const [settings, setSettings] = useState<BookmarkSettings>({
     baseHeight: 0.8,
     layerHeights: [0.6, 0.8, 1.0, 1.2],
@@ -32,6 +35,13 @@ export default function App() {
   // Refs
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Initialize Random Image
+  useEffect(() => {
+    // Select a random number between 1 and 6
+    const idx = Math.floor(Math.random() * 6) + 1;
+    setRandomGalleryImage(`https://raw.githubusercontent.com/danackermannyc/3D-bookmark-maker-v2/main/public/gallery/bmark-${idx}.jpg`);
+  }, []);
 
   // --- Handlers ---
 
@@ -325,6 +335,18 @@ export default function App() {
                     </li>
                 </ul>
             </div>
+            
+             {/* Contact */}
+             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div className="flex items-center gap-2 mb-4">
+                    <Mail className="text-sky-500" size={20} />
+                    <h2 className="font-bold text-lg text-slate-800">Contact</h2>
+                </div>
+                <p className="text-slate-500 text-sm leading-relaxed">
+                   Have a question or feedback?<br/>
+                   <a href="mailto:dan@3dbookmark.app" className="font-bold text-emerald-600 hover:text-emerald-700 hover:underline">dan@3dbookmark.app</a>
+                </p>
+             </div>
         </div>
 
         {/* Right Column: Controls */}
@@ -456,39 +478,58 @@ export default function App() {
              <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                  <div className="flex justify-between items-center mb-4">
                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Updates</span>
-                     <span className="bg-emerald-50 text-emerald-600 text-[10px] px-2 py-0.5 rounded-full font-bold">v1.3.0</span>
+                     <span className="bg-emerald-50 text-emerald-600 text-[10px] px-2 py-0.5 rounded-full font-bold">v1.5.0</span>
                  </div>
                  <ul className="space-y-3">
                      <li className="flex items-start gap-2 text-xs text-slate-600">
                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
-                         <span><strong className="text-slate-900">High Res Engine:</strong> Resolution increased by 60% (8px/mm).</span>
-                     </li>
-                     <li className="flex items-start gap-2 text-xs text-slate-600">
-                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
-                         <span><strong className="text-slate-900">Vibrancy Boost:</strong> Enhanced color separation and noise reduction.</span>
+                         <span><strong className="text-slate-900">Gallery Mode:</strong> Added video guide and print showcase.</span>
                      </li>
                      <li className="flex items-start gap-2 text-xs text-slate-600">
                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
                          <span><strong className="text-slate-900">Smart 3MF:</strong> Added thumbnails & auto-color assignment.</span>
                      </li>
+                     <li className="flex items-start gap-2 text-xs text-slate-600">
+                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                         <span><strong className="text-slate-900">High Res Engine:</strong> Resolution increased by 60% (8px/mm).</span>
+                     </li>
                  </ul>
+             </div>
+
+             {/* Support */}
+             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div className="flex items-center gap-2 mb-4">
+                    <Coffee className="text-rose-500" size={20} />
+                    <h2 className="font-bold text-lg text-slate-800">Support</h2>
+                </div>
+                <p className="text-slate-500 text-sm mb-6 leading-relaxed">
+                    This tool is free and open-source. If you enjoy using it, a coffee is always appreciated!
+                </p>
+                <a 
+                  href="https://ko-fi.com/danackerman" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group block w-full bg-[#FF5E5B] hover:bg-[#ff4845] text-white p-4 rounded-xl font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all active:translate-y-0 text-center flex items-center justify-center gap-3"
+                >
+                  <Coffee size={20} className="group-hover:rotate-12 transition-transform" />
+                  <span>Buy me a coffee</span>
+                </a>
              </div>
 
         </div>
       </main>
 
-      {/* Footer Area with Video & Tip Jar */}
-      <footer className="max-w-6xl w-full mt-20 mb-12 grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-slate-200 pt-12">
-        
+      {/* New Footer Section: Video & Random Image */}
+      <section className="max-w-6xl w-full mt-12 mb-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         {/* Left: Video */}
-        <div className="flex flex-col items-start gap-6">
+        <div className="flex flex-col gap-4">
             <h3 className="font-bold text-xl text-slate-800 flex items-center gap-3">
               <div className="bg-red-600 p-1.5 rounded-lg text-white">
-                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                 <Youtube size={20} fill="currentColor" />
               </div>
               See it in action
             </h3>
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 w-[280px] aspect-[9/16] group">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 w-full aspect-video group">
                 <iframe 
                     className="w-full h-full"
                     src="https://www.youtube.com/embed/xjQbWemTaN0?rel=0" 
@@ -500,36 +541,48 @@ export default function App() {
             </div>
         </div>
 
-        {/* Right: Tip Jar */}
-        <div className="flex flex-col items-start md:items-end justify-center h-full gap-8">
-            <div className="text-left md:text-right space-y-3">
-               <h3 className="text-2xl font-bold text-slate-900">Printed something cool?</h3>
-               <p className="text-slate-500 max-w-md text-base leading-relaxed">
-                 This tool is completely free. If you enjoyed using it, sharing your print or buying me a coffee keeps the updates coming!
-               </p>
-            </div>
-            
-            <a 
-              href="https://ko-fi.com/danackerman" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group flex items-center gap-4 bg-[#FF5E5B] text-white pl-8 pr-10 py-5 rounded-full font-black shadow-xl hover:bg-[#ff4845] hover:shadow-2xl hover:-translate-y-1 transition-all active:scale-95 active:translate-y-0"
-            >
-              <div className="bg-white/20 p-2 rounded-full group-hover:rotate-12 transition-transform">
-                <Coffee size={24} fill="currentColor" className="text-white" />
+        {/* Right: Random Gallery Image (4:3) */}
+        <div className="flex flex-col gap-4">
+            <h3 className="font-bold text-xl text-slate-800 flex items-center gap-3">
+              <div className="bg-indigo-600 p-1.5 rounded-lg text-white">
+                 <ImageIcon size={20} />
               </div>
-              <div className="flex flex-col items-start">
-                  <span className="text-[10px] uppercase tracking-widest font-bold opacity-80">Support the Dev</span>
-                  <span className="text-lg leading-none">Buy me a coffee</span>
-              </div>
-            </a>
-            
-            <div className="flex gap-4 text-slate-400">
-               {/* Maybe add social links later, for now just empty or text */}
+              Gallery
+            </h3>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 w-full aspect-[4/3] group">
+                 {randomGalleryImage ? (
+                    <img 
+                        src={randomGalleryImage} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                        alt="Gallery Print" 
+                    />
+                 ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate-300">
+                        <Loader2 className="animate-spin" size={32}/>
+                    </div>
+                 )}
+                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center">
+                    <p className="text-white text-sm font-medium tracking-wide">
+                        Printed on Bambu Lab A1 Mini
+                    </p>
+                 </div>
             </div>
         </div>
+      </section>
 
+      {/* Bottom Footer Bar */}
+      <footer className="w-full border-t border-slate-200 py-8 text-center bg-white/50">
+        <div className="max-w-4xl mx-auto px-4">
+            <p className="text-slate-500 text-sm mb-4">
+                <strong>Bambu Bookmark Creator</strong> is an open-source tool designed for the Bambu Lab A1, A1 Mini, P1S, and X1C with AMS.
+            </p>
+            <div className="flex justify-center gap-6 text-sm font-medium text-slate-400">
+                 <a href="#" className="hover:text-emerald-600 flex items-center gap-1 transition-colors"><Github size={14}/> GitHub</a>
+                 <a href="#" className="hover:text-emerald-600 flex items-center gap-1 transition-colors"><Flag size={14}/> Report Issue</a>
+            </div>
+        </div>
       </footer>
+
     </div>
   );
 }
