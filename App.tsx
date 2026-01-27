@@ -12,7 +12,7 @@ export default function App() {
   const [rawImgSrc, setRawImgSrc] = useState<string | null>(null);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const [quantizedData, setQuantizedData] = useState<{ palette: RGB[], indices: Uint8Array, rawIndices: Uint8Array } | null>(null);
-  
+
   // Cropper State
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -227,22 +227,20 @@ export default function App() {
         {/* Left Column: Editor & Preview */}
         <div className="lg:col-span-7 flex flex-col gap-6">
             
-            {/* Start Section */}
+            {/* Start Section: Upload Only */}
             {!imgSrc && !rawImgSrc && (
-                <div className="flex flex-col gap-6">
-                    <div 
-                        onClick={() => fileInputRef.current?.click()}
-                        className="bg-white p-12 rounded-2xl shadow-sm border-2 border-dashed border-slate-200 text-center flex flex-col items-center justify-center gap-4 min-h-[300px] hover:border-emerald-500 hover:bg-emerald-50/50 transition-all cursor-pointer group"
-                    >
-                        <div className="bg-slate-100 group-hover:bg-emerald-100 p-6 rounded-full transition-colors">
-                            <Upload className="text-slate-400 group-hover:text-emerald-600" size={40} />
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-bold text-slate-700 group-hover:text-emerald-700">Upload Image</h2>
-                            <p className="text-slate-500 max-w-sm mt-2 text-sm leading-relaxed">
-                                Use your own photos or graphics. Clear, high-contrast images work best.
-                            </p>
-                        </div>
+                <div 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="bg-white p-8 rounded-2xl shadow-sm border-2 border-dashed border-slate-200 text-center flex flex-col items-center justify-center gap-4 min-h-[320px] hover:border-emerald-500 hover:bg-emerald-50/50 transition-all cursor-pointer group relative overflow-hidden"
+                >
+                    <div className="bg-slate-100 group-hover:bg-emerald-100 p-5 rounded-full transition-colors z-10">
+                        <Upload className="text-slate-400 group-hover:text-emerald-600" size={32} />
+                    </div>
+                    <div className="z-10">
+                        <h2 className="text-lg font-bold text-slate-700 group-hover:text-emerald-700">Upload Image</h2>
+                        <p className="text-slate-500 text-xs mt-2 leading-relaxed px-4">
+                            Use your own photos or graphics. High contrast works best.
+                        </p>
                     </div>
                 </div>
             )}

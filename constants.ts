@@ -15,7 +15,3 @@ export const DEFAULT_PALETTE = [
   { r: 255, g: 0, b: 0 },     // Red
   { r: 0, g: 0, b: 255 },     // Blue
 ];
-
-export const MODEL_NAMES = {
-    IMAGE_GEN: 'gemini-2.5-flash-image'
-}

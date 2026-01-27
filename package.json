@@ -1,6 +1,6 @@
 {
   "name": "bambu-bookmark",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/genai": "^0.1.2",
     "jszip": "^3.10.1",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
