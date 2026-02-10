@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import JSZip from 'jszip';
-import { Upload, Download, Settings, Layers, Image as ImageIcon, Loader2, Crop as CropIcon, Check, RefreshCw, Printer, Coffee, Youtube, Github, Flag, Mail } from 'lucide-react';
+import { Upload, Download, Settings, Layers, Image as ImageIcon, Loader2, Crop as CropIcon, Check, RefreshCw, Printer, Coffee, Youtube, Github, Flag, Mail, PlayCircle } from 'lucide-react';
 import { quantizeImage, resizeImageToCanvas, drawQuantizedPreview, getCroppedImg, smoothIndices } from './utils/imageHelper';
 import { generate3MF, generateSTLs } from './utils/stlHelper';
 import { BookmarkSettings, ProcessingState, RGB } from './types';
@@ -519,21 +519,22 @@ export default function App() {
         </div>
       </main>
 
-      {/* New Footer Section: Video & Random Image */}
-      <section className="max-w-6xl w-full mt-12 mb-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        {/* Left: Video */}
+      {/* New Footer Section: Video & Gallery */}
+      <section className="max-w-6xl w-full mt-12 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+        
+        {/* 1. Showcase */}
         <div className="flex flex-col gap-4">
             <h3 className="font-bold text-xl text-slate-800 flex items-center gap-3">
               <div className="bg-red-600 p-1.5 rounded-lg text-white">
                  <Youtube size={20} fill="currentColor" />
               </div>
-              See it in action
+              Showcase
             </h3>
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 w-full aspect-video group">
                 <iframe 
                     className="w-full h-full"
                     src="https://www.youtube.com/embed/xjQbWemTaN0?rel=0" 
-                    title="YouTube video player" 
+                    title="Showcase Video" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     allowFullScreen
@@ -541,7 +542,27 @@ export default function App() {
             </div>
         </div>
 
-        {/* Right: Random Gallery Image (4:3) */}
+        {/* 2. Tutorial */}
+        <div className="flex flex-col gap-4">
+             <h3 className="font-bold text-xl text-slate-800 flex items-center gap-3">
+              <div className="bg-blue-600 p-1.5 rounded-lg text-white">
+                 <PlayCircle size={20} />
+              </div>
+              Tutorial
+            </h3>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-900 w-full aspect-video group">
+                <iframe 
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/pfiGALx8F_0?rel=0" 
+                    title="Tutorial Video" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                ></iframe>
+            </div>
+        </div>
+
+        {/* 3. Gallery */}
         <div className="flex flex-col gap-4">
             <h3 className="font-bold text-xl text-slate-800 flex items-center gap-3">
               <div className="bg-indigo-600 p-1.5 rounded-lg text-white">
@@ -549,7 +570,7 @@ export default function App() {
               </div>
               Gallery
             </h3>
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 w-full aspect-[4/3] group">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 w-full aspect-video group">
                  {randomGalleryImage ? (
                     <img 
                         src={randomGalleryImage} 
